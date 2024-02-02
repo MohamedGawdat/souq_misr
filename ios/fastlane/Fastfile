@@ -1,0 +1,32 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+app_store_connect_api_key(
+  key_id: "UH7KM2D47H",
+  issuer_id: "c3e455d1-3203-4ed7-8a3e-a2095344f155",
+  key_filepath: "/Users/gawdat/Downloads/AuthKey_UH7KM2D47H.p8"
+  # or
+  # key_content: ENV["APP_STORE_CONNECT_API_KEY"] # Your key content
+)
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    increment_build_number(xcodeproj: "Runner.xcodeproj")
+    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
+    upload_to_testflight
+  end
+end

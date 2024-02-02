@@ -1,0 +1,86 @@
+{
+  "change_history": [
+    {
+      "1/1/2024": {
+        "sell_price": 8.43,
+        "buy_price": 8.4,
+        "log_changes": [
+          {
+            "1/1/2024 12:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            },
+            "1/1/2024 2:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            },
+            "1/1/2024 8:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            }
+          }
+        ]
+      },
+      "2/1/2024": {
+        "sell_price": 8.43,
+        "buy_price": 8.4,
+        "log_changes": [
+          {
+            "2/1/2024 12:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            },
+            "2/1/2024 2:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            },
+            "2/1/2024 8:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            }
+          }
+        ]
+      },
+      "3/1/2024": {
+        "sell_price": 8.43,
+        "buy_price": 8.4,
+        "log_changes": [
+          {
+            "3/1/2024 12:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            },
+            "3/1/2024 2:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            },
+            "3/1/2024 8:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            }
+          }
+        ]
+      },
+      "4/1/2024": {
+        "sell_price": 8.43,
+        "buy_price": 8.4,
+        "log_changes": [
+          {
+            "4/1/2024 12:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            },
+            "4/1/2024 2:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            },
+            "4/1/2024 8:00": {
+              "sell_price": 8.43,
+              "buy_price": 8.4
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
