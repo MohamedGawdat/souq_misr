@@ -16,11 +16,11 @@
 default_platform(:ios)
 
 app_store_connect_api_key(
-  key_id: "UH7KM2D47H",
-  issuer_id: "c3e455d1-3203-4ed7-8a3e-a2095344f155",
-  key_filepath: "/Users/gawdat/Downloads/AuthKey_UH7KM2D47H.p8"
+  key_id: ENV["IOS_KEY_ID"],
+  issuer_id: ENV["IOS_ISSUER_ID"],
+ #  key_filepath: ./keys/AuthKey.p8
   # or
-  # key_content: ENV["APP_STORE_CONNECT_API_KEY"] # Your key content
+  key_content: ENV["IOS_KEY_FILEPATH"] # Your key content
 )
 platform :ios do
   desc "Push a new beta build to TestFlight"
