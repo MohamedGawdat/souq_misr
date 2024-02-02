@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../../utilities/toast_util.dart';
 import 'ApiResponse.dart';
 import 'BaseResponse.dart';
 import 'RequestBody.dart';
@@ -88,21 +87,21 @@ class ApiManager {
           message: "Unauthorized access",
         );
       case 400:
-        ToastUtil.showLongToast(message: "Bad request");
+        // ToastUtil.showLongToast(message: "Bad request");
         return ApiResponse(
           statusCode: 400,
           isSuccess: false,
           message: "Bad request",
         );
       case 500:
-        ToastUtil.showLongToast(message: "Internal server error");
+        // ToastUtil.showLongToast(message: "Internal server error");
         return ApiResponse(
           statusCode: 500,
           isSuccess: false,
           message: "Internal server error",
         );
       default:
-        ToastUtil.showLongToast(message: "Unknown error occurred");
+        // ToastUtil.showLongToast(message: "Unknown error occurred");
         return ApiResponse(
           statusCode: e.response?.statusCode,
           isSuccess: false,
