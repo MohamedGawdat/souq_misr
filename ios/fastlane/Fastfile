@@ -5,8 +5,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     # Use 'xcodes' action to select Xcode version
-    xcversion(use_xcodes: true, version: '15.2')
-
+    xcodes(use_xcodes: true, version: '15.2')
     increment_build_number(xcodeproj: "Runner.xcodeproj")
     build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
     upload_to_testflight

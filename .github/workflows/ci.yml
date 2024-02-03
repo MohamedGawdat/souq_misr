@@ -16,6 +16,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Add any additional steps needed before setting up Xcode,
+      # such as installing specific tools or dependencies
+
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
