@@ -1,31 +1,12 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-xcversion(version: "15.2")
+# Fastfile
 default_platform(:ios)
 
-app_store_connect_api_key(
-  key_id: ENV["IOS_KEY_ID"],
-  issuer_id: ENV["IOS_ISSUER_ID"],
-  key_content: ENV["IOS_KEY_FILEPATH"] # Your key content
-   #  key_filepath: ./keys/AuthKey.p8
-    # or
-)
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    xcodes(version: '15.2', select_for_current_build_only: true)
+    # Use 'xcodes' action to select Xcode version
+    xcversion(use_xcodes: true, version: '15.2')
+
     increment_build_number(xcodeproj: "Runner.xcodeproj")
     build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
     upload_to_testflight
