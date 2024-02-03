@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-deploy:
     name: Build and Deploy to TestFlight
-    runs-on: macos-14
+    runs-on: macos-14  # Adjusted to 'macos-latest' for compatibility
 
     steps:
       - name: Checkout Code
@@ -17,25 +17,21 @@ jobs:
       - name: Set up Xcode
         uses: actions/setup-xcode@v2
         with:
-          xcode-version: '15.2'
+          xcode-version: '15.2'  # Ensure this version is compatible with your project
 
       - name: Print Xcode version
         run: xcodebuild -version
 
       - name: Install Fastlane and Bundler
         run: |
-          sudo gem install fastlane
           sudo gem install bundler
-
-      - name: Set up provisioning profiles
-        run: |
-          echo "${{ secrets.PROVISIONING_PROFILES }}" | base64 --decode > /tmp/MyApp.mobileprovision
+          bundle install  # Using Bundler for Fastlane installation
 
       - name: Install and Set up Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.16.9'  # Specify Flutter version if needed
           cache: true
-          cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
 
       - name: Get Flutter dependencies
         run: flutter pub get
@@ -43,8 +39,7 @@ jobs:
       - name: Install and Update Cocoapods
         run: |
           cd ios
-          sudo gem install cocoapods
-          pod update
+          pod install  # Changed to 'pod install' for controlled dependency management
 
       - name: Deploy to TestFlight
         env:
@@ -53,6 +48,4 @@ jobs:
           IOS_KEY_FILEPATH: ${{ secrets.IOS_KEY_FILEPATH }}
         run: |
           cd ios
-          bundle config set path vendor/bundle
-          bundle install
           bundle exec fastlane ios beta
