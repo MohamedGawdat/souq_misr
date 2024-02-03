@@ -8,14 +8,14 @@ on:
 jobs:
   build-and-deploy:
     name: Build and Deploy to TestFlight
-    runs-on: macos-14  # Adjusted to 'macos-latest' for compatibility
+    runs-on: macos-14  # Using macOS 14
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
 
       - name: Select Xcode Version
-        run: sudo xcode-select -s '/Applications/Xcode_15.2.app'  # Manually select Xcode version
+        run: sudo xcode-select -s '/Applications/Xcode_15.2.app'
 
       - name: Print Xcode version
         run: xcodebuild -version
@@ -23,11 +23,16 @@ jobs:
       - name: Install Fastlane and Bundler
         run: |
           sudo gem install bundler
-
-      - name: Install Gems with Bundler
-        run: |
-          cd ios  # Change to the directory containing the Gemfile, if necessary
           bundle install
+        working-directory: ios
+
+      - name: Test App Store Connect Connection
+        run: bundle exec fastlane ios test_connection
+        working-directory: ios
+        env:
+          IOS_KEY_ID: ${{ secrets.IOS_KEY_ID }}
+          IOS_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
+          IOS_KEY_FILEPATH: ${{ secrets.IOS_KEY_FILEPATH }}
 
       - name: Install and Set up Flutter
         uses: subosito/flutter-action@v2
@@ -41,7 +46,7 @@ jobs:
       - name: Install and Update Cocoapods
         run: |
           cd ios
-          pod install  # Changed to 'pod install' for controlled dependency management
+          pod install  # Using 'pod install' for controlled dependency management
 
       - name: Deploy to TestFlight
         env:
