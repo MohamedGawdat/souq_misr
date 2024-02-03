@@ -12,15 +12,15 @@
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
-
+cversion(version: "15.2")
 default_platform(:ios)
 
 app_store_connect_api_key(
   key_id: ENV["IOS_KEY_ID"],
   issuer_id: ENV["IOS_ISSUER_ID"],
- #  key_filepath: ./keys/AuthKey.p8
-  # or
   key_content: ENV["IOS_KEY_FILEPATH"] # Your key content
+   #  key_filepath: ./keys/AuthKey.p8
+    # or
 )
 platform :ios do
   desc "Push a new beta build to TestFlight"
