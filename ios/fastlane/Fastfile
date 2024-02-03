@@ -23,10 +23,20 @@ before_all do
  xcodes(version: "15.2", select_for_current_build_only: true)
 end
 platform :ios do
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
+ desc "Push a new beta build to TestFlight"
+ lane :beta do
     increment_build_number(xcodeproj: "Runner.xcodeproj")
     build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
     upload_to_testflight
-  end
+ end
+
+ desc "Test connection to App Store Connect"
+ lane :test_connection do
+    require 'spaceship'
+    Spaceship::ConnectAPI.login(ENV["IOS_KEY_ID"], ENV["IOS_ISSUER_ID"], key_content: ENV["IOS_KEY_FILEPATH"])
+    apps = Spaceship::ConnectAPI::App.all
+    UI.message("Connected to App Store Connect")
+    UI.message("List of apps: #{apps.map(&:name).join(', ')}")
+ end
 end
+
