@@ -12,7 +12,7 @@
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
-cversion(version: "15.2")
+xcversion(version: "15.2")
 default_platform(:ios)
 
 app_store_connect_api_key(
