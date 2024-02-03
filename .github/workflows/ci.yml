@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-deploy:
     name: Build and Deploy
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
@@ -64,6 +64,7 @@ jobs:
       - name: Deploy to TestFlight
         env:
           #   FASTLANE_USER: ${{ secrets.IOS_SECRET }}
+#          IOS_SECRET: ${{ secrets.IOS_SECRET }}
           BUNDLE_PATH: vendor/bundle
           IOS_KEY_ID: ${{ secrets.IOS_KEY_ID }}
           IOS_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
