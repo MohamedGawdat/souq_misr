@@ -1,4 +1,4 @@
-name: iOS CI/CD Pipeline
+name: ci
 
 on:
   push:
