@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-deploy:
     name: Build and Deploy to TestFlight
-    runs-on: macos-14  # Using macOS 14
+    runs-on: macos-14
 
     steps:
       - name: Checkout Code
@@ -23,8 +23,17 @@ jobs:
       - name: Install Fastlane and Bundler
         run: |
           sudo gem install bundler
+        working-directory: ios
+
+      - name: Install Gems with Bundler
+        run: |
           bundle install
         working-directory: ios
+
+      - name: Create API Key File
+        run: echo "$IOS_KEY_CONTENT" > /tmp/AuthKey.p8
+        env:
+          IOS_KEY_CONTENT: ${{ secrets.IOS_KEY_CONTENT }}
 
       - name: Test App Store Connect Connection
         run: bundle exec fastlane ios test_connection
@@ -32,12 +41,12 @@ jobs:
         env:
           IOS_KEY_ID: ${{ secrets.IOS_KEY_ID }}
           IOS_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
-          IOS_KEY_FILEPATH: ${{ secrets.IOS_KEY_FILEPATH }}
+          IOS_KEY_FILEPATH: /tmp/AuthKey.p8
 
       - name: Install and Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.9'  # Specify Flutter version if needed
+          flutter-version: '3.16.9'
           cache: true
 
       - name: Get Flutter dependencies
@@ -46,13 +55,13 @@ jobs:
       - name: Install and Update Cocoapods
         run: |
           cd ios
-          pod install  # Using 'pod install' for controlled dependency management
+          pod install
 
       - name: Deploy to TestFlight
-        env:
-          IOS_KEY_ID: ${{ secrets.IOS_KEY_ID }}
-          IOS_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
-          IOS_KEY_FILEPATH: ${{ secrets.IOS_KEY_FILEPATH }}
         run: |
           cd ios
           bundle exec fastlane ios beta
+        env:
+          IOS_KEY_ID: ${{ secrets.IOS_KEY_ID }}
+          IOS_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
+          IOS_KEY_FILEPATH: /tmp/AuthKey.p8
