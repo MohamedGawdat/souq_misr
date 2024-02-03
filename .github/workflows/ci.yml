@@ -23,7 +23,11 @@ jobs:
       - name: Install Fastlane and Bundler
         run: |
           sudo gem install bundler
-          bundle install  # Using Bundler for Fastlane installation
+
+      - name: Install Gems with Bundler
+        run: |
+          cd ios  # Change to the directory containing the Gemfile, if necessary
+          bundle install
 
       - name: Install and Set up Flutter
         uses: subosito/flutter-action@v2
