@@ -30,10 +30,8 @@ jobs:
           bundle install
         working-directory: ios
 
-      - name: Create API Key File
-        run: echo "$IOS_KEY_CONTENT" > /tmp/AuthKey.p8
-        env:
-          IOS_KEY_CONTENT: ${{ secrets.IOS_KEY_CONTENT }}
+      - name: Check OpenSSL version
+        run: openssl version
 
       - name: Test App Store Connect Connection
         run: bundle exec fastlane ios test_connection
@@ -41,12 +39,12 @@ jobs:
         env:
           IOS_KEY_ID: ${{ secrets.IOS_KEY_ID }}
           IOS_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
-          IOS_KEY_FILEPATH: /tmp/AuthKey.p8
+          IOS_KEY_FILEPATH: ${{ secrets.IOS_KEY_FILEPATH }}
 
       - name: Install and Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.9'
+          flutter-version: '3.16.9'  # Specify Flutter version if needed
           cache: true
 
       - name: Get Flutter dependencies
@@ -64,4 +62,4 @@ jobs:
         env:
           IOS_KEY_ID: ${{ secrets.IOS_KEY_ID }}
           IOS_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
-          IOS_KEY_FILEPATH: /tmp/AuthKey.p8
+          IOS_KEY_FILEPATH: ${{ secrets.IOS_KEY_FILEPATH }}
