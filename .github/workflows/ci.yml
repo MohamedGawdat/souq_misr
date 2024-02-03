@@ -20,45 +20,28 @@ jobs:
       - name: Print Xcode version
         run: xcodebuild -version
 
-      - name: Install Fastlane and Bundler
-        run: |
-          sudo gem install bundler
-        working-directory: ios
-
-      - name: Install Gems with Bundler
-        run: |
-          bundle install
-        working-directory: ios
-
-      - name: Check OpenSSL version
-        run: openssl version
-
-      - name: Test App Store Connect Connection
-        run: bundle exec fastlane ios test_connection
-        working-directory: ios
-        env:
-          IOS_KEY_ID: ${{ secrets.IOS_KEY_ID }}
-          IOS_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
-          IOS_KEY_FILEPATH: ${{ secrets.IOS_KEY_FILEPATH }}
-
-      - name: Install and Set up Flutter
-        uses: subosito/flutter-action@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          flutter-version: '3.16.9'  # Specify Flutter version if needed
-          cache: true
+          ruby-version: 2.7
 
-      - name: Get Flutter dependencies
-        run: flutter pub get
+      - name: Install Fastlane
+        run: gem install fastlane
 
-      - name: Install and Update Cocoapods
+      - name: Print Xcode version
+        run: xcrun --show-sdk-path --sdk iphoneos
+
+      - name: Pod install
         run: |
           cd ios
           pod install
+          cd ..
 
-      - name: Deploy to TestFlight
+      - name: Run Fastlane
         run: |
           cd ios
-          bundle exec fastlane ios beta
+          fastlane ios beta
+          cd ..
         env:
           IOS_KEY_ID: ${{ secrets.IOS_KEY_ID }}
           IOS_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
