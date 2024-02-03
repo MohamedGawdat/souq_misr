@@ -1,6 +1,6 @@
 # Fastfile
 default_platform(:ios)
-
+xcversion(version: "15.2")
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
