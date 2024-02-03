@@ -1,13 +1,10 @@
 # Fastfile
 default_platform(:ios)
-xcversion(version: "15.2")
 platform :ios do
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
-    # Use 'xcodes' action to select Xcode version
-    xcodes(version: '15.2', select_for_current_build_only: true)
+ desc "Push a new beta build to TestFlight"
+ lane :beta do
     increment_build_number(xcodeproj: "Runner.xcodeproj")
     build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
     upload_to_testflight
-  end
+ end
 end
