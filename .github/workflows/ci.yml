@@ -47,6 +47,9 @@ jobs:
       #       cat ./ios/key.json
       #       echo "List files in iOS directory:"
       #       ls -la ./ios
+      - name: Set up provisioning profiles
+        run: |
+          echo "${{ secrets.PROVISIONING_PROFILES }}" | base64 --decode > /tmp/MyApp.mobileprovision
 
       - name: Get dependencies
         run: flutter pub get
