@@ -12,9 +12,9 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: 15.0.1
+          xcode-version: 15.2
       - name: Switch Xcode version
-        run: sudo xcode-select --switch /Applications/Xcode_15.0.1.app
+        run: sudo xcode-select --switch /Applications/Xcode_15.2.app
 
       - uses: actions/checkout@v3
         with:
@@ -35,6 +35,12 @@ jobs:
 
       - name: Install Fastlane
         run: sudo gem install fastlane
+
+      - name: Install Bundler
+        run: sudo gem install bundler
+
+      - name: Install xcode-install
+        run: sudo gem install xcode-install
 
       - name: Install Bundler
         run: sudo gem install bundler
