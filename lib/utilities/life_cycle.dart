@@ -6,7 +6,8 @@ class AppLifecycleWidget extends StatefulWidget {
   final VoidCallback? onMounted;
   final Widget Function(BuildContext context) builder;
 
-  const AppLifecycleWidget({super.key, 
+  const AppLifecycleWidget({
+    super.key,
     this.onCreated,
     this.onDestroyed,
     this.onMounted,
@@ -14,7 +15,7 @@ class AppLifecycleWidget extends StatefulWidget {
   });
 
   @override
-  _AppLifecycleWidgetState createState() => _AppLifecycleWidgetState();
+  State<AppLifecycleWidget> createState() => _AppLifecycleWidgetState();
 }
 
 class _AppLifecycleWidgetState extends State<AppLifecycleWidget> {
