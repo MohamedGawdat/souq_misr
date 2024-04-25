@@ -79,7 +79,7 @@ dependencies:
 
   # Style
   flutter_screenutil: ^5.9.0
-  google_fonts:
+  google_fonts: ^6.2.1
   font_awesome_flutter: ^10.7.0
   flutter_spinkit: ^5.2.1
 #  modal_bottom_sheet: ^2.1.2
