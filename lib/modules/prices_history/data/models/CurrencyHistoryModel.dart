@@ -3,7 +3,7 @@ import '../../domain/entities/CurrencyHistory.dart';
 class CurrencyHistoryModel {
   final double sellPrice;
   final double buyPrice;
-  final DateTime recordedAt;
+  final String recordedAt;
   final bool isStartOfDay;
 
   CurrencyHistoryModel({
@@ -17,7 +17,7 @@ class CurrencyHistoryModel {
     return CurrencyHistoryModel(
       sellPrice: double.parse(json['sell_price']),
       buyPrice: double.parse(json['buy_price']),
-      recordedAt: DateTime.parse(json['recorded_at']),
+      recordedAt: json['recorded_at'],
       isStartOfDay: json['is_start_of_day'],
     );
   }

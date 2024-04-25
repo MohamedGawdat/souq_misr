@@ -29,10 +29,10 @@ class ApiManager {
     headers ??= {"content-type": "application/json"};
     headers.putIfAbsent("Accept", () => "application/json");
     // headers.putIfAbsent("token", () => AppAuth.data.token);
-    headers.putIfAbsent(
-        "Authorization",
-        () =>
-            'Bearer 3FFEisviB6ekCKrr7ciJIX5TOtGx3um9j7cQLKVoooVby4U73Woir8yMS78cRzDe');
+    // headers.putIfAbsent(
+    //     "Authorization",
+    //     () =>
+    //         'Bearer 3FFEisviB6ekCKrr7ciJIX5TOtGx3um9j7cQLKVoooVby4U73Woir8yMS78cRzDe');
 
     try {
       final response = await _dio.request(

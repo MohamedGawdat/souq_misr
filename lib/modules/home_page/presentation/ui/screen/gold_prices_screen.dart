@@ -39,11 +39,16 @@ class GoldScreenPrices extends StatelessWidget {
               Hero(
                 tag: showHero ? 'Gold' : '',
                 child: Material(
-                  child: _TableRows(
-                      goldList: provider.data!.gold
-                          .where((gold) => gold.buyPrice != null && gold.sellPrice != null) // Filter out golds with null prices
-                          .map((e) => e)
-                          .toList()),
+                  child: provider.data != null
+                      ? _TableRows(
+                          goldList: provider.data!.gold
+                              .where((gold) =>
+                                  gold.buyPrice != null &&
+                                  gold.sellPrice !=
+                                      null) // Filter out golds with null prices
+                              .map((e) => e)
+                              .toList())
+                      : const SizedBox(),
                 ),
               ),
             ],
@@ -120,8 +125,10 @@ class _TableHeaders extends StatelessWidget {
         'Gold',
         style: AppTextStyle.tableHeaderLable,
       ),
-      secondCell: _SortButton(title: 'Sell', isAscending: isSellAscending, onTap: onSortSell),
-      thirdCell: _SortButton(title: 'Buy', isAscending: isBuyAscending, onTap: onSortBuy),
+      secondCell: _SortButton(
+          title: 'Sell', isAscending: isSellAscending, onTap: onSortSell),
+      thirdCell: _SortButton(
+          title: 'Buy', isAscending: isBuyAscending, onTap: onSortBuy),
     );
   }
 }
@@ -130,7 +137,11 @@ class _SortButton extends StatelessWidget {
   final String title;
   final bool isAscending;
   final VoidCallback onTap;
-  const _SortButton({super.key, required this.onTap, required this.title, required this.isAscending});
+  const _SortButton(
+      {super.key,
+      required this.onTap,
+      required this.title,
+      required this.isAscending});
 
   @override
   Widget build(BuildContext context) {
@@ -152,8 +163,14 @@ class _SortButton extends StatelessWidget {
               },
               child: Icon(
                 isAscending ? Icons.arrow_upward : Icons.arrow_downward,
-                color: Provider.of<DataProvider>(context, listen: false).currentGoldSort != null
-                    ? Provider.of<DataProvider>(context, listen: false).currentGoldSort!.name.toLowerCase() == title.toLowerCase()
+                color: Provider.of<DataProvider>(context, listen: false)
+                            .currentGoldSort !=
+                        null
+                    ? Provider.of<DataProvider>(context, listen: false)
+                                .currentGoldSort!
+                                .name
+                                .toLowerCase() ==
+                            title.toLowerCase()
                         ? AppColors.darkGreen
                         : AppColors.gray900
                     : null,

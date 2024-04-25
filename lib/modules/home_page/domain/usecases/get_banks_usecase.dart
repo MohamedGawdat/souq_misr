@@ -22,7 +22,6 @@ class GetHomeDataUseCase {
     try {
       return await repository.getData();
     } catch (e) {
-      // Log the error, handle it, or rethrow
       print('Error fetching home data: $e');
       rethrow;
     }

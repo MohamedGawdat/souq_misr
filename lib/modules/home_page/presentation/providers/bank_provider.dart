@@ -32,8 +32,10 @@ class DataProvider with ChangeNotifier {
   Future<void> fetchBanks() async {
     try {
       _data = await getDataUseCase.call();
+      print('data is $data');
       filteredBanks = _data!.banks;
     } catch (e) {
+      print('error is $e');
       // Handle errors as needed
     } finally {
       notifyListeners();
@@ -50,8 +52,14 @@ class DataProvider with ChangeNotifier {
 
   void sortGoldList(String criteria) {
     if (_data != null && _data!.gold.isNotEmpty) {
-      sortList(_data!.gold, criteria == "sell" ? isSellAscendingGold : isBuyAscendingGold,
-          (item) => double.tryParse(criteria == "sell" ? item.sellPrice ?? '0' : item.buyPrice ?? '0') ?? 0);
+      sortList(
+          _data!.gold,
+          criteria == "sell" ? isSellAscendingGold : isBuyAscendingGold,
+          (item) =>
+              double.tryParse(criteria == "sell"
+                  ? item.sellPrice ?? '0'
+                  : item.buyPrice ?? '0') ??
+              0);
       notifyListeners();
     }
   }
@@ -76,9 +84,17 @@ class DataProvider with ChangeNotifier {
         (BankModel bank) {
           double price = 0.0;
           if (criteria == "sell") {
-            price = bank.currencies?.firstWhereOrNull((element) => element.code == selectedCurrency)?.sellPrice ?? 0.0;
+            price = bank.currencies
+                    ?.firstWhereOrNull(
+                        (element) => element.code == selectedCurrency)
+                    ?.sellPrice ??
+                0.0;
           } else if (criteria == "buy") {
-            price = bank.currencies?.firstWhereOrNull((element) => element.code == selectedCurrency)?.buyPrice ?? 0.0;
+            price = bank.currencies
+                    ?.firstWhereOrNull(
+                        (element) => element.code == selectedCurrency)
+                    ?.buyPrice ??
+                0.0;
           }
           return price;
         },
@@ -102,9 +118,12 @@ class DataProvider with ChangeNotifier {
   void sortSilverList(String criteria) {
     if (_data != null && _data!.silver.isNotEmpty) {
       _data!.silver.sort((a, b) {
-        var sellA = double.tryParse(a.price ?? '0') ?? 0; // Default to 0 if null or not a number
+        var sellA = double.tryParse(a.price ?? '0') ??
+            0; // Default to 0 if null or not a number
         var sellB = double.tryParse(b.price ?? '0') ?? 0;
-        return isSellAscendingSilver || isBuyAscendingSilver ? sellA.compareTo(sellB) : sellB.compareTo(sellA);
+        return isSellAscendingSilver || isBuyAscendingSilver
+            ? sellA.compareTo(sellB)
+            : sellB.compareTo(sellA);
       });
       notifyListeners();
     }
@@ -126,12 +145,17 @@ class DataProvider with ChangeNotifier {
     if (query.isEmpty) {
       filteredBanks = _data!.banks; // Assuming 'banks' is your original list
     } else {
-      filteredBanks = _data!.banks.where((bank) => bank.name!.toLowerCase().contains(query.toLowerCase())).toList();
+      filteredBanks = _data!.banks
+          .where(
+              (bank) => bank.name!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
     }
     notifyListeners();
   }
 
   void sortList<T>(List<T> list, bool ascending, Comparable Function(T) key) {
-    list.sort((a, b) => ascending ? Comparable.compare(key(a), key(b)) : Comparable.compare(key(b), key(a)));
+    list.sort((a, b) => ascending
+        ? Comparable.compare(key(a), key(b))
+        : Comparable.compare(key(b), key(a)));
   }
 }

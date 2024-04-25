@@ -5,11 +5,18 @@ import '../../../../../style/app_colors.dart';
 import '../../../../../style/app_text_style.dart';
 
 class TableDataRow extends StatelessWidget {
+  final int firstCellFlex;
   final Widget firstCell;
   final Widget secondCell;
   final Widget thirdCell;
   final String? lastUpdate;
-  const TableDataRow({super.key, required this.firstCell, required this.secondCell, required this.thirdCell, this.lastUpdate});
+  const TableDataRow(
+      {super.key,
+      this.firstCellFlex = 2,
+      required this.firstCell,
+      required this.secondCell,
+      required this.thirdCell,
+      this.lastUpdate});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class TableDataRow extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                flex: 2,
+                flex: firstCellFlex,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: firstCell,

@@ -18,7 +18,8 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -32,7 +33,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   fetch() async {
-    await Provider.of<DataProvider>(context, listen: false).fetchBanks().then((value) {
+    await Provider.of<DataProvider>(context, listen: false)
+        .fetchBanks()
+        .then((value) {
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(
@@ -71,10 +74,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                         onLoaded: (composition) {
                           _controller
                             ..duration = composition.duration
-                            ..forward().whenComplete(() => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const NewBaseHomePage()),
-                                ));
+                            ..forward()
+                                .whenComplete(() => Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const NewBaseHomePage()),
+                                    ));
                         },
                       ),
                     ),

@@ -14,7 +14,7 @@ class AppAuth {
   static AppState currentState = AppState.Production;
   static late _AuthValues data;
 
-  static const _productionUrl = 'https://currencies.gawdt.com';
+  static const _productionUrl = 'https://currencies.flatter.dev';
   static const _testUrl = 'https://currencies.gawdt.com';
   static const _devUrl = 'https://currencies.gawdt.com';
 

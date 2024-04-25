@@ -1,7 +1,7 @@
 class CurrencyHistory {
   final double? sellPrice;
   final double? buyPrice;
-  final DateTime? recordedAt;
+  final String? recordedAt;
   final bool? isStartOfDay;
 
   CurrencyHistory({

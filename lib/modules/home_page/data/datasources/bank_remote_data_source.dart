@@ -11,16 +11,21 @@ abstract class IHomeRemoteDataSource {
 class HomeDataRemoteDataSourceImpl implements IHomeRemoteDataSource {
   @override
   Future<PricesApiResponseData> getData() async {
-    final ApiResponse response = await ApiManager.sendRequest(
-      link: '/api/v1/banks/', // Update with actual endpoint
-      method: Method.GET,
-    );
+    late ApiResponse response;
+    try {
+      response = await ApiManager.sendRequest(
+        link: '/api/v1/banks/',
+        method: Method.GET,
+      );
 
-    if (response.isSuccess && response.data != null) {
-      return PricesApiResponseData.fromJson(response.data!);
-    } else {
-      throw Exception('Failed to load data');
+      if (response.isSuccess && response.data != null) {
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print('catch $e');
     }
+    return PricesApiResponseData.fromJson(response.data!);
   }
 }
 

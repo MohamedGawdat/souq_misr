@@ -30,7 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
     provider.filterBanks(query);
   }
 
-  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     await Provider.of<DataProvider>(context, listen: false).fetchBanks();
@@ -60,15 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ListView(
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 25.h),
+            padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 10.w),
             children: [
               // const WhiteRadiusRow(),
-              Row(
-                children: [
-                  Flexible(child: GoldContainer(golds: provider.data!.gold)),
-                  SizedBox(width: 10.w),
-                  Flexible(child: SilverContainer(silvers: provider.data!.silver)),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: Row(
+                  children: [
+                    Flexible(child: GoldContainer(golds: provider.data!.gold)),
+                    SizedBox(width: 10.w),
+                    Flexible(
+                        child: SilverContainer(silvers: provider.data!.silver)),
+                  ],
+                ),
               ),
               SizedBox(height: 11.h),
               // SelectCurrency(
@@ -86,7 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
               // ),
               // const BannerAdWidget(adUnitId: ' BannerAd.testAdUnitId'),
               // SizedBox(height: 11.h),
-              CustomSearchBar(onSearch: _searchBanks),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: CustomSearchBar(onSearch: _searchBanks),
+              ),
               SizedBox(height: 11.h),
 
               BanksTable(
