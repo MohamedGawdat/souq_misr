@@ -78,18 +78,29 @@ jobs:
 
       - name: 📦 Install dependencies
         run: flutter pub get
+      #      - name: 🍏📦 Create iOS appbundle release
+      #        run: |
+      #          flutter build ipa \
+      #            --export-options-plist=ios/Runner/ExportOptions.plist
+      ##          popd
+      #
+      #
+      #      - name: 🍏🚀 Deploy to App Store (Testflight)
+      #        uses: apple-actions/upload-testflight-build@v1
+      #        with:
+      #          app-path: ${{ github.workspace }}/app/build/ios/ipa/flutter_ci_cd_demo.ipa
 
       - name: 🍏📦 Create iOS appbundle release
         run: |
-          flutter build ipa \
-            --export-options-plist=ios/Runner/ExportOptions.plist
-#          popd
-          
+          flutter build ipa --export-options-plist=ios/Runner/ExportOptions.plist
+
+      - name: List output directory
+        run: ls -l ${{ github.workspace }}/build/ios/ipa/  # Adjust based on actual output directory
 
       - name: 🍏🚀 Deploy to App Store (Testflight)
         uses: apple-actions/upload-testflight-build@v1
         with:
-          app-path: ${{ github.workspace }}/app/build/ios/ipa/flutter_ci_cd_demo.ipa
+          app-path: ${{ github.workspace }}/build/ios/ipa/*.ipa  # Ensure this matches the actual path
           issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           api-private-key: ${{ secrets.APP_STORE_CONNECT_API_PRIVATE_KEY }}
