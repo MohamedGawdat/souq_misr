@@ -51,6 +51,14 @@ jobs:
       - name: 🍏📦 Build iOS AppBundle
         run: flutter build ipa --export-options-plist=ios/Runner/ExportOptions.plist
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: Upload Ipa build to github
+          path: build/
+          if-no-files-found: error
+
+
       - name: List build directory contents
         run: ls -R /Users/runner/work/souq_misr/souq_misr/build/
 
