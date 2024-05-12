@@ -49,8 +49,13 @@ jobs:
         run: flutter pub get
 
       - name: 🍏📦 Build iOS AppBundle
-        run: |
-          flutter build ipa --export-options-plist=ios/Runner/ExportOptions.plist
+        run: flutter build ipa --export-options-plist=ios/Runner/ExportOptions.plist
+
+      - name: List build directory contents
+        run: ls -R /Users/runner/work/souq_misr/souq_misr/build/
+
+      - name: List IPA directory
+        run: ls -l /Users/runner/work/souq_misr/souq_misr/build/ios/ipa/
 
       - name: List Output Directory
         run: ls -l ${{ github.workspace }}/build/ios/ipa/
