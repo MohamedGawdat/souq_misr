@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key>
+    <string>app-store</string> <!-- Distribution method: app-store, ad-hoc, package, enterprise, development -->
+    <key>teamID</key>
+    <string>NHF49WV7N9</string> <!-- Your Apple Developer Program Team ID -->
+    <key>uploadSymbols</key>
+    <true/> <!-- Specifies whether to upload symbols for crash reporting -->
+    <key>uploadBitcode</key>
+    <true/> <!-- Specifies whether to include Bitcode -->
+    <key>compileBitcode</key>
+    <true/> <!-- Specifies whether to recompile Bitcode (only for archive) -->
+</dict>
+</plist>
