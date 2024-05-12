@@ -1,23 +1,24 @@
 name: 📦🚀 Build & deploy iOS app for an environment
 
 on:
-  workflow_call:
-    inputs:
-      environment-name:
-        required: true
-        type: string
-      environment-url:
-        required: true
-        type: string
-      short-environment-name:
-        required: true
-        type: string
-      flavor:
-        required: true
-        type: string
-      new-pubspec-version:
-        required: true
-        type: string
+  [push]
+  # workflow_call:
+  #   inputs:
+  #     environment-name:
+  #       required: true
+  #       type: string
+  #     environment-url:
+  #       required: true
+  #       type: string
+  #     short-environment-name:
+  #       required: true
+  #       type: string
+  #     flavor:
+  #       required: true
+  #       type: string
+  #     new-pubspec-version:
+  #       required: true
+  #       type: string
 
 jobs:
   deployIos:
