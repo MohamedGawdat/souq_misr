@@ -82,9 +82,10 @@ jobs:
       - name: 🍏📦 Create iOS appbundle release
         run: |
           flutter build ipa \
-            --release \
             --export-options-plist=ios/Runner/ExportOptions.plist
           popd
+          
+
       - name: 🍏🚀 Deploy to App Store (Testflight)
         uses: apple-actions/upload-testflight-build@v1
         with:
