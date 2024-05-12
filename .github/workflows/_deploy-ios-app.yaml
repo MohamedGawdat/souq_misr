@@ -83,7 +83,7 @@ jobs:
         run: |
           flutter build ipa \
             --export-options-plist=ios/Runner/ExportOptions.plist
-          popd
+#          popd
           
 
       - name: 🍏🚀 Deploy to App Store (Testflight)
