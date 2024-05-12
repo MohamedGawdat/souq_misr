@@ -64,17 +64,23 @@ jobs:
 #      - name: 📝 Edit pubspec version
 #        run: |
 #          sed -Ei "" "s/^version: (.*)/version: ${{ inputs.new-pubspec-version }}/" /pubspec.yaml
+
       - name: ⚙️ Setup Flutter
         uses: subosito/flutter-action@v2
+        id: flutter
         with:
           flutter-version: "3.7.0"
           channel: 'stable'
           cache: true
-        id: flutter
+
 #      - name: ⚙️ Setup Melos
 #        uses: bluefireteam/melos-action@v2
 #      - name: ⚙️ Install dependencies for all packages
 #        run: melos build:pub_get:all
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
       - name: 🍏📦 Create iOS ${{ inputs.short-environment-name }} appbundle release
         run: |
           pushd app/
