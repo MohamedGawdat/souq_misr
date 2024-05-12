@@ -9,7 +9,7 @@
     <key>uploadSymbols</key>
     <true/> <!-- Specifies whether to upload symbols for crash reporting -->
     <key>uploadBitcode</key>
-    <true/> <!-- Specifies whether to include Bitcode -->
+    <false/> <!-- Specifies whether to include Bitcode -->
     <key>compileBitcode</key>
     <true/> <!-- Specifies whether to recompile Bitcode (only for archive) -->
 </dict>
