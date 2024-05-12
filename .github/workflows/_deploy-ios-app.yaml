@@ -81,7 +81,7 @@ jobs:
       - name: 📦 Install dependencies
         run: flutter pub get
 
-      - name: 🍏📦 Create iOS ${{ inputs.short-environment-name }} appbundle release
+      - name: 🍏📦 Create iOS appbundle release
         run: |
           pushd app/
           flutter build ipa \
