@@ -67,10 +67,9 @@ jobs:
 
       - name: ⚙️ Setup Flutter
         uses: subosito/flutter-action@v2
-        id: flutter
         with:
-          flutter-version: "3.7.0"
-          channel: 'stable'
+          channel: stable
+          flutter-version: 3.19.0
 
 #      - name: ⚙️ Setup Melos
 #        uses: bluefireteam/melos-action@v2
