@@ -8,7 +8,7 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>com.dollarprice.souqMisrElmaly</key>
-        <string>Provisioning Profile Name</string>
+        <stringSouqMisr</string>
     </dict>
     <key>teamID</key>
     <string>NHF49WV7N9</string> <!-- Your Apple Developer Program Team ID -->
