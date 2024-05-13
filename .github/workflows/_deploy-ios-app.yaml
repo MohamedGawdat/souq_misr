@@ -52,6 +52,15 @@ jobs:
       - name: Install Fastlane
         run: gem install fastlane -N --user-install
 
+
+      - name: Run Fastlane
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
+        run: fastlane ios deploy
+
+
       - name: Install cocoapods
         run: sudo gem install cocoapods
 
