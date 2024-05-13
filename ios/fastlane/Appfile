@@ -1,5 +1,5 @@
 app_identifier("com.dollarprice.souqMisrElmaly") # The bundle identifier of your app
-apple_id("Moh.gawdat@icloud.com") # Your Apple Developer Portal username
+apple_id("moh.gawdat@icloud.com") # Your Apple Developer Portal username
 
 itc_team_id("122630437") # App Store Connect Team ID
 team_id("NHF49WV7N9") # Developer Portal Team ID
