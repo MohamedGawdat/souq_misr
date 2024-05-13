@@ -3,7 +3,7 @@ name: Apple Release
 on:
   push:
     branches:
-      - apple-release
+      - main
 
 jobs:
   build-and-deploy-ios:
@@ -35,12 +35,12 @@ jobs:
       - name: Melos Bootstrap
         run: melos bs
       - name: Build and Deploy to TestFlight
-#        env:
-#          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-#          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_PAT_TOKEN }}
-#          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-#          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-#          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        #        env:
+        #          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        #          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_PAT_TOKEN }}
+        #          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+        #          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        #          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
         run: |
           cd ./ios
           bundle exec fastlane release_beta
