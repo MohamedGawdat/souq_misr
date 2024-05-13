@@ -19,7 +19,7 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :deploy do |options|
-    key_filepath=options[:secureFile]
+    key_filepath = options[:secureFile] || '../auth_key.p8' # Default to relative path if not provided
 
     env = options[:env]
 
