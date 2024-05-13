@@ -29,30 +29,19 @@ jobs:
       - name: 📦 Install Dependencies
         run: flutter pub get
 
-      - name: Install Fastlane and Cocoapods
-        run: |
-          sudo gem install fastlane cocoapods
-          echo "PATH=$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')/bin" >> $GITHUB_ENV
+      - name: Install Fastlane
+        run: gem install fastlane -N --user-install
 
-      - name: Prepare iOS project
-        run: |
-          cd ios
-          pod install
-
-      - name: Run Fastlane
-        env:
-          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-          APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
-        run: fastlane ios deploy
+      - name: Install cocoapods
+        run: sudo gem install cocoapods
 
       - name: Build and Upload to Testflight
-        run: |
-          cd ios
-          fastlane deploy_to_testflight
         env:
           API_KEY_PATH: ../auth_key.p8
+        run: |
+          cd ios
+          echo $(pwd)
+          pod install
+          fastlane deploy_to_testflight
 
-      - name: Print build directory contents (optional step for debugging)
-        run: ls -R ${GITHUB_WORKSPACE}/build/
 
