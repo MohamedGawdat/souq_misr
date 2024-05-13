@@ -35,7 +35,7 @@ platform :ios do
 #     increment_build_number({
 #     build_number: latest_testflight_build_number(api_key: api_key) + 1
 #     })
-    xcversion(version: "14.2")
+#     xcversion(version: "14.2")
     update_code_signing_settings(
       use_automatic_signing: false,
       path: "Runner.xcodeproj",
