@@ -1,4 +1,4 @@
-name: Deploy to TestFlight
+name: 📦🚀 Build & Deploy iOS App
 
 on:
   push:
@@ -7,31 +7,32 @@ on:
 
 jobs:
   build_and_deploy:
+    name: 🍏 Build and Deploy iOS App
     runs-on: macos-latest
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1
+      - name: ⚙️ Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'  # Specify your Flutter version here
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build iOS app
-        run: flutter build ios --release --no-codesign
+          channel: stable
+          flutter-version: '3.19.6'
 
       - name: Install Fastlane
-        run: |
-          gem install fastlane
-          fastlane init
+        run: gem install fastlane -N --user-install
 
-      - name: Deploy to TestFlight
-        run: fastlane deploy secureFile:../auth_key.p8
+      - name: Install cocoapods
+        run: sudo gem install cocoapods
+
+      - name: Build and Upload to Testflight
         env:
-          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+          API_KEY_PATH: ../auth_key.p8
+        run: |
+          cd ios
+          echo $(pwd)
+          pod install
+          fastlane deploy_to_testflight
+
+
