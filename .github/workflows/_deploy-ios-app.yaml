@@ -26,6 +26,10 @@ jobs:
       - name: Install cocoapods
         run: sudo gem install cocoapods
 
+      - name: Get Flutter Dependencies
+        run: flutter pub get
+        working-directory: ./ios
+
       - name: Build and Upload to Testflight
         env:
           API_KEY_PATH: ../auth_key.p8
@@ -34,5 +38,3 @@ jobs:
           echo $(pwd)
           pod install
           fastlane deploy_to_testflight
-
-
