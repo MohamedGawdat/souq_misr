@@ -14,31 +14,31 @@ jobs:
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v3
 
-      - name: 🔐 Install Apple Certificate and Provisioning Profile
-        env:
-          P12_DISTRIBUTION_CERTIFICATE_BASE64: ${{ secrets.IOS_P12_DISTRIBUTION_CERTIFICATE_BASE64 }}
-          P12_DISTRIBUTION_CERTIFICATE_PASSWORD: ${{ secrets.IOS_P12_DISTRIBUTION_CERTIFICATE_PASSWORD }}
-          DISTRIBUTION_PROVISIONING_PROFILE_BASE64: ${{ secrets.IOS_DISTRIBUTION_PROVISIONING_PROFILE_BASE64 }}
-          KEYCHAIN_PASSWORD: ${{ secrets.IOS_RUNNER_LOCAL_KEYCHAIN_PASSWORD }}
-          EXPORT_OPTIONS_BASE64: ${{ secrets.IOS_EXPORT_OPTIONS_BASE64 }}
-        run: |
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PROVISIONING_PROFILE_PATH=$RUNNER_TEMP/build_pp.mobileprovision
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          EXPORT_OPTIONS_PATH="ios/Runner/ExportOptions.plist"
-
-          echo -n "$P12_DISTRIBUTION_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$DISTRIBUTION_PROVISIONING_PROFILE_BASE64" | base64 --decode -o $PROVISIONING_PROFILE_PATH
-          echo -n "$EXPORT_OPTIONS_BASE64" | base64 --decode -o $EXPORT_OPTIONS_PATH
-
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security import $CERTIFICATE_PATH -P "$P12_DISTRIBUTION_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PROVISIONING_PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-
+#      - name: 🔐 Install Apple Certificate and Provisioning Profile
+#        env:
+#          P12_DISTRIBUTION_CERTIFICATE_BASE64: ${{ secrets.IOS_P12_DISTRIBUTION_CERTIFICATE_BASE64 }}
+#          P12_DISTRIBUTION_CERTIFICATE_PASSWORD: ${{ secrets.IOS_P12_DISTRIBUTION_CERTIFICATE_PASSWORD }}
+#          DISTRIBUTION_PROVISIONING_PROFILE_BASE64: ${{ secrets.IOS_DISTRIBUTION_PROVISIONING_PROFILE_BASE64 }}
+#          KEYCHAIN_PASSWORD: ${{ secrets.IOS_RUNNER_LOCAL_KEYCHAIN_PASSWORD }}
+#          EXPORT_OPTIONS_BASE64: ${{ secrets.IOS_EXPORT_OPTIONS_BASE64 }}
+#        run: |
+#          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+#          PROVISIONING_PROFILE_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+#          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+#          EXPORT_OPTIONS_PATH="ios/Runner/ExportOptions.plist"
+#
+#          echo -n "$P12_DISTRIBUTION_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+#          echo -n "$DISTRIBUTION_PROVISIONING_PROFILE_BASE64" | base64 --decode -o $PROVISIONING_PROFILE_PATH
+#          echo -n "$EXPORT_OPTIONS_BASE64" | base64 --decode -o $EXPORT_OPTIONS_PATH
+#
+#          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+#          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+#          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+#          security import $CERTIFICATE_PATH -P "$P12_DISTRIBUTION_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+#          security list-keychain -d user -s $KEYCHAIN_PATH
+#          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+#          cp $PROVISIONING_PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+#
       - name: ⚙️ Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -48,15 +48,31 @@ jobs:
       - name: 📦 Install Dependencies
         run: flutter pub get
 
-      - name: 🍏📦 Build iOS AppBundle
-        run: flutter build ios --release
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4.3.1
-        with:
-          name: Upload Ipa build to github
-          path: build/
-          if-no-files-found: error
+      - name: Install Fastlane
+        run: gem install fastlane -N --user-install
+
+      - name: Install cocoapods
+        run: sudo gem install cocoapods
+
+      - name: Build and Upload to Testflight
+        env:
+          API_KEY_PATH: ../auth_key.p8
+        run: |
+          cd ios
+          echo $(pwd)
+          pod install
+          fastlane deploy_to_testflight
+#
+#      - name: 🍏📦 Build iOS AppBundle
+#        run: flutter build ios --release
+#
+#      - name: Upload artifacts
+#        uses: actions/upload-artifact@v4.3.1
+#        with:
+#          name: Upload Ipa build to github
+#          path: build/
+#          if-no-files-found: error
 
 
       - name: List build directory contents
