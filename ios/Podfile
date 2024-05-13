@@ -38,7 +38,11 @@ target 'Runner' do
 end
 
 post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
+  installer.generated_projects.each do |project|
+    project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.base_configuration_reference = installer.sandbox.root + "Target Support Files/Pods-Runner/Pods-Runner.#{config.name}.xcconfig"
+      end
+    end
   end
 end
