@@ -1,41 +1,46 @@
-name: 📦🚀 Build & Deploy iOS App
+name: Apple Release
 
 on:
   push:
     branches:
-      - main
+      - apple-release
 
 jobs:
-  build_and_deploy:
-    name: 🍏 Build and Deploy iOS App
+  build-and-deploy-ios:
     runs-on: macos-latest
-
+    defaults:
+      run:
+        working-directory: app
     steps:
-      - name: ⬇️ Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: ⚙️ Setup Flutter
+      - name: Set up git and fetch all history for all branches and tags
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+      - name: Bundle install for iOS Gemfile
+        timeout-minutes: 5
+        run: cd ./ios && bundle install
+      - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
-          flutter-version: '3.19.6'
-
-      - name: Install Fastlane
-        run: gem install fastlane -N --user-install
-
-      - name: Install cocoapods
-        run: sudo gem install cocoapods
-
-      - name: Get Flutter Dependencies
-        run: flutter pub get
-        working-directory: ./ios
-
-      - name: Build and Upload to Testflight
-        env:
-          API_KEY_PATH: ../auth_key.p8
+          flutter-version: "3.16.2"
+          channel: "stable"
+          architecture: x64
+          cache: true
+      - name: Set up melos
+        run: flutter pub global activate melos
+      - name: Melos Bootstrap
+        run: melos bs
+      - name: Build and Deploy to TestFlight
+#        env:
+#          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+#          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_PAT_TOKEN }}
+#          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+#          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+#          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
         run: |
-          cd ios
-          echo $(pwd)
-          pod install
-          fastlane deploy
-
+          cd ./ios
+          bundle exec fastlane release_beta
