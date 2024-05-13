@@ -19,7 +19,9 @@ jobs:
           ruby-version: 2.7
 
       - name: Install Fastlane
-        run: gem install fastlane -N --user-install
+        run: |
+          gem install fastlane -N --user-install
+          echo "export PATH=\"$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')/bin\"" >> $GITHUB_ENV
 
       - name: Install cocoapods
         run: sudo gem install cocoapods
