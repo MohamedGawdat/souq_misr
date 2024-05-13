@@ -62,11 +62,11 @@ jobs:
       - name: List build directory contents
         run: ls -R /Users/runner/work/souq_misr/souq_misr/build/
 
-      - name: List IPA directory
-        run: ls -l /Users/runner/work/souq_misr/souq_misr/build/ios/ipa/
+#      - name: List IPA directory
+#        run: ls -l /Users/runner/work/souq_misr/souq_misr/build/ios/ipa/
 
-      - name: List Output Directory
-        run: ls -l ${{ github.workspace }}/build/ios/ipa/
+#      - name: List Output Directory
+#        run: ls -l ${{ github.workspace }}/build/ios/ipa/
 
       - name: 🍏🚀 Deploy to App Store (TestFlight)
         uses: apple-actions/upload-testflight-build@v1
