@@ -3,7 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>method</key>
-    <string>app-store</string> <!-- Distribution method: app-store, ad-hoc, package, enterprise, development -->
+    <key>method</key>
+    <string>app-store</string> <!-- or ad-hoc, enterprise, development -->
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>com.dollarprice.souqMisrElmaly</key>
+        <string>Provisioning Profile Name</string>
+    </dict>
     <key>teamID</key>
     <string>NHF49WV7N9</string> <!-- Your Apple Developer Program Team ID -->
     <key>uploadSymbols</key>
