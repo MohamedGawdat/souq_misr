@@ -1,46 +1,42 @@
-name: Apple Release
+name: Deploy Flutter App to TestFlight
 
 on:
   push:
     branches:
       - main
+      - develop
 
 jobs:
-  build-and-deploy-ios:
+  build-and-deploy:
     runs-on: macos-latest
-    defaults:
-      run:
-        working-directory: app
     steps:
-      - name: Set up git and fetch all history for all branches and tags
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Set up Ruby
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby environment
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "2.7"
-      - name: Bundle install for iOS Gemfile
-        timeout-minutes: 5
-        run: cd ./ios && bundle install
-      - name: Set up Flutter SDK
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.16.2"
-          channel: "stable"
-          architecture: x64
-          cache: true
-      - name: Set up melos
-        run: flutter pub global activate melos
-      - name: Melos Bootstrap
-        run: melos bs
-      - name: Build and Deploy to TestFlight
-        #        env:
-        #          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        #          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_PAT_TOKEN }}
-        #          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-        #          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-        #          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          ruby-version: 2.7
+
+      - name: Install Fastlane
+        run: gem install fastlane -N --user-install
+
+      - name: Install cocoapods
+        run: sudo gem install cocoapods
+
+      - name: Build and Upload to Testflight
+        env:
+          API_KEY_PATH: ../auth_key.p8
         run: |
-          cd ./ios
-          bundle exec fastlane release_beta
+          cd ios
+          echo $(pwd)
+          pod install
+          fastlane deploy_to_testflight
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.x'
+
+      - name: Build Flutter App
+        run: flutter build ios --release --no-codesign
