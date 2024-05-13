@@ -37,4 +37,4 @@ jobs:
           cd ios
           echo $(pwd)
           pod install
-          fastlane deploy_to_testflight
+          fastlane deploy
