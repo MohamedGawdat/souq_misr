@@ -51,7 +51,7 @@ platform :ios do
       team_id: "NHF49WV7N9",
       bundle_identifier: "com.dollarprice.souqMisrElmaly",
       code_sign_identity: "iPhone Distribution",
-      profile_name: "# ### ",
+      profile_name: "Mohamed Gawdat",
     )
     upload_to_testflight(
       api_key: api_key,
