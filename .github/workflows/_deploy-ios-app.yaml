@@ -30,7 +30,7 @@ jobs:
         run: flutter pub get
 
       - name: Install Fastlane
-        run: gem install fastlane -N --user-install
+        run: sudo gem install fastlane -N --user-install
 
       - name: Install cocoapods
         run: sudo gem install cocoapods
